@@ -5,16 +5,18 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const { executablePath } = require("puppeteer");
 const path = require("path");
 const http = require("http");
+const fs = require("fs");
+const code = fs.readFileSync(path.join(__dirname, "Sample/test.js"), "utf8");
 
 puppeteer.use(StealthPlugin());
 
 const app = express();
 const PORT = 3000;
 
-app.use(express.static(path.join(__dirname, "Frontend/dist")));
+app.use(express.static(path.join(__dirname, "Service")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "Frontend/dist/index.html"));
+  res.sendFile(path.join(__dirname, "Service/index.html"));
 });
 
 const server = http.createServer(app);
@@ -25,7 +27,7 @@ server.listen(PORT, () => {
 
 const startScraping = async () => {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     executablePath: executablePath(),
     args: [
       "--incognito",
@@ -52,6 +54,11 @@ const startScraping = async () => {
 
   await page.goto(`http://localhost:${PORT}`);
   await new Promise((resolve) => setTimeout(resolve, 1000));
+  await page.click("body");
+  await page.keyboard.down("Control");
+  await page.keyboard.press("KeyV");
+  await page.keyboard.up("Control");
+
   await page.screenshot({ path: "screenshot.png" });
   console.log("Screenshot saved.");
 
