@@ -23,8 +23,8 @@
     },
     "author": "",
     "type": "commonjs",
-    "main": "index.js",
+    "main": "image.js",
     "scripts": {
-        "start": "node index"
+        "start": "node image"
     }
 }
