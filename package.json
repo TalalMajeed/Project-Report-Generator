@@ -1,0 +1,30 @@
+{
+    "name": "project-report-generator",
+    "version": "1.0.0",
+    "description": "A Project Report Generator Powered by Python &amp; Flask API",
+    "homepage": "https://github.com/TalalMajeed/Project-Report-Generator#readme",
+    "bugs": {
+        "url": "https://github.com/TalalMajeed/Project-Report-Generator/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TalalMajeed/Project-Report-Generator.git"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.7.7",
+        "dotenv": "^16.4.5",
+        "form-data": "^4.0.1",
+        "puppeteer": "^24.1.1",
+        "puppeteer-extra": "3.3.4",
+        "puppeteer-extra-plugin-stealth": "2.11.1",
+        "puppeteer-screen-recorder": "2.1.2",
+        "puppeteer-stream": "3.0.15"
+    },
+    "author": "",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index"
+    }
+}
