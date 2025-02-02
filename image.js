@@ -7,7 +7,6 @@ const path = require("path");
 const http = require("http");
 const fs = require("fs");
 const code = fs.readFileSync(path.join(__dirname, "Sample/test.js"), "utf8");
-
 puppeteer.use(StealthPlugin());
 
 const app = express();
@@ -27,7 +26,7 @@ server.listen(PORT, () => {
 
 const startScraping = async () => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     executablePath: executablePath(),
     args: [
       "--incognito",
@@ -53,11 +52,18 @@ const startScraping = async () => {
   });
 
   await page.goto(`http://localhost:${PORT}`);
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  await page.click("body");
-  await page.keyboard.down("Control");
-  await page.keyboard.press("KeyV");
-  await page.keyboard.up("Control");
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  await page.evaluate((codeContent) => {
+    if (window.monaco) {
+      const editor = window.monaco.editor.getEditors()[0]; // Get the first active editor
+      if (editor) {
+        editor.getModel().setValue(codeContent); // Set the content
+      }
+    } else {
+      console.error("Monaco Editor not found!");
+    }
+  }, code);
 
   await page.screenshot({ path: "screenshot.png" });
   console.log("Screenshot saved.");
